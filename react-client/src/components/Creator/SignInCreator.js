@@ -86,7 +86,7 @@ class SignInCreator extends React.Component {
     if (this.state.sess && this.state.events.length > 0) {
       console.log(this.state.events)
       return (
-        <Create events={this.state.events}></Create>
+        <Create email={this.state.email} events={this.state.events}></Create>
       )
     } else {
       return (
