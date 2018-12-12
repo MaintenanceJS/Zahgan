@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-// mongoose.connect('mongodb://amjad:amjad123@ds139251.mlab.com:39251/zahgan')
 
 //sessions
 app.use(cookieParser('shhhh, very secret'));
@@ -52,6 +51,16 @@ app.get('/create', function (req, res, next) {
 
 //add new event to the db
 app.post('/create', function (req, res, next) {
+  console.log('in creat post', req.body.obj)
+  if (req.body.obj.email === "") {
+    req.body.obj.email = "isa@nothing.com";
+  }
+  if (req.body.obj.url === "") {
+    req.body.obj.url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDA4Jhlt2TGWKs8hSYa4yLTv26x7UqLoVtCbcbh1KNxPjbuo8Ibw";
+  }
+  if (req.body.obj.imgName === "") {
+    req.body.obj.imgName = imageName;
+  }
   Event.create(req.body.obj).then(function (event) {
     res.send(event)
   }).catch(next)
@@ -528,3 +537,72 @@ app.get('/account/logout', (req, res, next) => {
 
     })
 });
+
+
+const multer = require('multer');
+const ejs = require('ejs');
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+  destination: './react-client/public/images/',
+  filename: function(req, file, cb){
+    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Init Upload
+const upload = multer({
+  storage: storage,
+  limits:{fileSize: 1000000},
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);
+  }
+}).single('myImage');
+
+// Check File Type
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: Images Only!');
+  }
+}
+
+// EJS
+app.set('view engine', 'ejs');
+
+
+var imageName;
+app.post('/upload', (req, res) => {
+  console.log('in upload hello')
+  upload(req, res, (err) => {
+    if(err){
+      res.render('index', {
+        msg: err
+      });
+    } else {
+      if(req.file == undefined){
+        res.render('index', {
+          msg: 'Error: No File Selected!'
+        });
+      } else {
+        imageName = req.file.filename
+        console.log(imageName)
+        // res.send({
+        //   name: `${req.file.filename}`
+        // });
+      }
+    }
+  });
+});
+
+app.get('/upload', (req, res) => {
+  res.send(imageName)
+})
