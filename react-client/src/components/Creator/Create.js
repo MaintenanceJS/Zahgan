@@ -33,7 +33,7 @@ class Create extends React.Component {
       date: '',
       location: '',
       items: [],
-      imgName: 'myImage-1544558235241.png',
+      imgName: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.allseats = this.allseats.bind(this);
@@ -53,6 +53,7 @@ class Create extends React.Component {
   componentDidMount() {
     $('#home').hide()
     console.log('email============', this.props.email)
+    console.log('imgName============', this.state.imgName)
   }
   //this function will take the data from props and send them to the data base to creat event 
   handleSubmit(event) {
@@ -186,12 +187,12 @@ class Create extends React.Component {
       method: 'POST',
       body: data,
     });
-
+    event.preventDefault();
     setTimeout(function() {
       $.ajax({
         url: '/upload',
         success: (data) => {
-          console.log("my data", data)
+          alert("my data", data)
           scope.setState({
             imgName: data
           })
@@ -200,7 +201,8 @@ class Create extends React.Component {
           console.log('err', err);
         }
       });
-    }, 1000);
+    }, 3000);
+    event.preventDefault();
   }
 
   handleImageInput(event) {

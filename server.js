@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-mongoose.connect('mongodb://amjad:amjad123@ds139251.mlab.com:39251/zahgan')
 
 //sessions
 app.use(cookieParser('shhhh, very secret'));
@@ -53,6 +52,15 @@ app.get('/create', function (req, res, next) {
 //add new event to the db
 app.post('/create', function (req, res, next) {
   console.log('in creat post', req.body.obj)
+  if (req.body.obj.email === "") {
+    req.body.obj.email = "isa@nothing.com";
+  }
+  if (req.body.obj.url === "") {
+    req.body.obj.url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDA4Jhlt2TGWKs8hSYa4yLTv26x7UqLoVtCbcbh1KNxPjbuo8Ibw";
+  }
+  if (req.body.obj.imgName === "") {
+    req.body.obj.imgName = imageName;
+  }
   Event.create(req.body.obj).then(function (event) {
     res.send(event)
   }).catch(next)
@@ -586,6 +594,7 @@ app.post('/upload', (req, res) => {
         });
       } else {
         imageName = req.file.filename
+        console.log(imageName)
         // res.send({
         //   name: `${req.file.filename}`
         // });
