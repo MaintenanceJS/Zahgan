@@ -33,6 +33,7 @@ class Create extends React.Component {
       date: '',
       location: '',
       items: [],
+      imgName: 'myImage-1544558235241.png',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.allseats = this.allseats.bind(this);
@@ -51,17 +52,7 @@ class Create extends React.Component {
   //silf envok function 
   componentDidMount() {
     $('#home').hide()
-    $.ajax({
-      url: '/create',
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    console.log('email============', this.props.email)
   }
   //this function will take the data from props and send them to the data base to creat event 
   handleSubmit(event) {
@@ -75,7 +66,9 @@ class Create extends React.Component {
       date: this.state.date,
       eventLocation: [this.state.location],
       attending: [],
-      email: this.props.email
+      email: this.props.email,
+      imgName: this.state.imgName,
+      attending: []
     }
 
     // pst requst using ajax 
@@ -147,7 +140,7 @@ class Create extends React.Component {
     }
     return total
   }
-  
+
   //to hide and show the create event part
   appearCreate() {
     if (this.state.appearCreate) {
@@ -185,6 +178,35 @@ class Create extends React.Component {
     });
   }
 
+  handleImage(event) {
+    var scope = this;
+    event.preventDefault();
+    const data = new FormData(event.target);
+    fetch('/upload', {
+      method: 'POST',
+      body: data,
+    });
+
+    setTimeout(function() {
+      $.ajax({
+        url: '/upload',
+        success: (data) => {
+          console.log("my data", data)
+          scope.setState({
+            imgName: data
+          })
+        },
+        error: (err) => {
+          console.log('err', err);
+        }
+      });
+    }, 1000);
+  }
+
+  handleImageInput(event) {
+    console.log(event.target.files[0])
+    event.preventDefault();
+  }
 
   render() {
     return (
@@ -204,7 +226,7 @@ class Create extends React.Component {
             <span className="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
             <button style={{ float: 'right', marginTop: '0.5%', color: 'black' }} className="btn btn-lg" onClick={this.logOut.bind(this)}>Logout</button>
           </h6>
-          
+
           <div className="row dash-row">
 
             <div className="col-4 data-box">
@@ -226,17 +248,17 @@ class Create extends React.Component {
             </div>
           </div>
           <div>
-          <CreatorEvents className="row" style={{position: 'relative'}} events={this.props.events}/>
-        </div>
+            <CreatorEvents className="row" style={{ position: 'relative' }} events={this.props.events} />
+          </div>
         </div>
 
-        
-        
 
-          <button style={{ marginLeft: '2.8%', fontSize: '15px' }} className="col-md-4 border p-3 mb-2 bg-primary text-white" id="createClick" onClick={this.appearCreate.bind(this)}> Create a new event </button>
+
+
+        <button style={{ marginLeft: '2.8%', fontSize: '15px' }} className="col-md-4 border p-3 mb-2 bg-primary text-white" id="createClick" onClick={this.appearCreate.bind(this)}> Create a new event </button>
         <br />
         <hr />
-        <div style={{ marginLeft: '2%', fontSize: '12px'}} className="col-md-6">
+        <div style={{ marginLeft: '2%', fontSize: '12px' }} className="col-md-6">
           <form onSubmit={this.handleSubmit}>
             <div className="createEvent">
               <div>
@@ -283,6 +305,17 @@ class Create extends React.Component {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
               <div>
                 <div className="form-group row">
                   <label className="col-sm-2 col-form-label"> Number of seats: </label>
@@ -313,7 +346,7 @@ class Create extends React.Component {
                     <input id="location-input" className="form-control col-md-12" placeholder="city, street" value={this.state.location}
                       onClick={this.modal} />
                   </div>
-                  <button style={{mfloat: 'right', marginTop: "-2%"}} type="button" className="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Map</button>
+                  <button style={{ mfloat: 'right', marginTop: "-2%" }} type="button" className="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Map</button>
                 </div>
               </div>
 
@@ -358,11 +391,37 @@ class Create extends React.Component {
             </div>
           </div>
         </div>
-        {/* <div className="container">
-          <CreatorEvents style={{position: 'relative'}} email={this.props.email}/>
-        </div> */}
+        <div>
+
+
+
+
+
+
+
+
+
+
+          <h1>File Upload</h1>
+          <form onSubmit={this.handleImage.bind(this)} enctype="multipart/form-data">
+            <div className="file-field input-field">
+              <div className="btn grey">
+                <span>File</span>
+                <input onChange={this.handleImageInput.bind(this)} name="myImage" type="file" />
+              </div>
+              <div className="file-path-wrapper">
+                <input className="file-path validate" type="text" />
+              </div>
+            </div>
+            <button type="submit" className="btn">Submit</button>
+          </form>
+          <br />
+        </div>
       </div>
     );
   }
 }
 export default Create
+
+
+//action="/upload" method="POST" 

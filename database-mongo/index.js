@@ -42,6 +42,9 @@ const EventSchema = new Schema({
     attending: {
         type: Array
     },
+    imgName: {
+        type: String
+    }
 });
 
 var Event = mongoose.model('Event', EventSchema);

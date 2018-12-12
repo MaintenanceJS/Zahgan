@@ -52,6 +52,7 @@ app.get('/create', function (req, res, next) {
 
 //add new event to the db
 app.post('/create', function (req, res, next) {
+  console.log('in creat post', req.body.obj)
   Event.create(req.body.obj).then(function (event) {
     res.send(event)
   }).catch(next)
@@ -528,3 +529,71 @@ app.get('/account/logout', (req, res, next) => {
 
     })
 });
+
+
+const multer = require('multer');
+const ejs = require('ejs');
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+  destination: '/Users/isaanagreh/Desktop/Legacy/Zahgan/react-client/src/images',
+  filename: function(req, file, cb){
+    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+
+// Init Upload
+const upload = multer({
+  storage: storage,
+  limits:{fileSize: 1000000},
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);
+  }
+}).single('myImage');
+
+// Check File Type
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /jpeg|jpg|png|gif/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: Images Only!');
+  }
+}
+
+// EJS
+app.set('view engine', 'ejs');
+
+
+var imageName;
+app.post('/upload', (req, res) => {
+  console.log('in upload', req.file)
+  upload(req, res, (err) => {
+    if(err){
+      res.render('index', {
+        msg: err
+      });
+    } else {
+      if(req.file == undefined){
+        res.render('index', {
+          msg: 'Error: No File Selected!'
+        });
+      } else {
+        imageName = req.file.filename
+        // res.send({
+        //   name: `${req.file.filename}`
+        // });
+      }
+    }
+  });
+});
+
+app.get('/upload', (req, res) => {
+  res.send(imageName)
+})
