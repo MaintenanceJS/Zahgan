@@ -536,7 +536,7 @@ const ejs = require('ejs');
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
-  destination: '/Users/isaanagreh/Desktop/Legacy/Zahgan/react-client/src/images',
+  destination: './react-client/public/images/',
   filename: function(req, file, cb){
     cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   }
@@ -573,7 +573,7 @@ app.set('view engine', 'ejs');
 
 var imageName;
 app.post('/upload', (req, res) => {
-  console.log('in upload', req.file)
+  console.log('in upload hello')
   upload(req, res, (err) => {
     if(err){
       res.render('index', {
