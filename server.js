@@ -40,7 +40,17 @@ db.once('open', function () {
   console.log('mongoose connected successfully');
 });
 
-//var data=[{Name:'"https://wallpaperbrowse.com5/media/images/pexels-photo-248797.jpeg"' ,HomeWork:'y7ya'}]
+//deployment helper
+
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, 'react-client/public')));
+  // Handle React routing, return all requests to React app
+  app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'react-client/public', 'index.html'));
+  });
+}
+
 
 // get a list for all events from the db
 app.get('/create', function (req, res, next) {
@@ -59,7 +69,10 @@ app.post('/create', function (req, res, next) {
     req.body.obj.url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDA4Jhlt2TGWKs8hSYa4yLTv26x7UqLoVtCbcbh1KNxPjbuo8Ibw";
   }
   //if (req.body.obj.imgName === "") {
+  
+  
   req.body.obj.imgName = imageName;
+  console.log(imageName)
   //}
   Event.create(req.body.obj).then(function (event) {
     res.send(event)
@@ -95,16 +108,7 @@ app.use(function (err, req, res, next) {
   })
 })
 
-//deployment helper
 
-if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'react-client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'react-client/build', 'index.html'));
-  });
-}
 
 //listen to port
 app.listen(process.env.PORT || 4000, function () {
@@ -594,7 +598,8 @@ app.post('/upload', (req, res) => {
           msg: 'Error: No File Selected!'
         });
       } else {
-        imageName = req.file.filename
+        //imageName = req.file.filename
+        imageName = 'http://' + 'localhost:3000' + '/images/' + req.file.filename;
         console.log(imageName)
         // res.send({
         //   name: `${req.file.filename}`
