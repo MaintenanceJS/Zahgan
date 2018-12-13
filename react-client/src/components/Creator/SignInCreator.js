@@ -87,13 +87,7 @@ class SignInCreator extends React.Component {
     if (this.state.sess && this.state.events.length > 0 && this.state.email.length > 0) {
       console.log(this.state.events)
       return (
-<<<<<<< HEAD
         <Create events={this.state.events} email={this.state.email}></Create>
-||||||| merged common ancestors
-        <Create events={this.state.events}></Create>
-=======
-        <Create email={this.state.email} events={this.state.events}></Create>
->>>>>>> 6a55685aafb32c4228d3594454b3e3e24fcd7ac1
       )
     } else {
       return (
