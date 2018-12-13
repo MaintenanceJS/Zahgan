@@ -54,7 +54,7 @@ class CreatorEvents extends React.Component {
                         this.state.events.map((event) => {
                         return (<div style={{marginLeft:".5%", marginRight:".5%"}}>
                             <div className="col-lg-4 thumbnail">
-                                <img src={event.url}/>
+                                <img src={require(`../../../public/images/${event.imgName}`)}/>
                                 <h5>eventName: {event.eventName}</h5>
                                 <h5>email: {event.email}</h5>
                             </div>
