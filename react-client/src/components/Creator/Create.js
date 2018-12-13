@@ -1,10 +1,6 @@
 import React from 'react'
 import $ from 'jquery';
-import EventClassNew from '../Home/EventClassNew'
 import GoogleMapReact from 'google-map-react';
-import SimpleMap from './map';
-import Eventcreat from './Eventcreat'
-import MapForCreator from './mapForCreator'
 import Eventsets from './Eventsets'
 import Eventcreatshow from './Eventcreatshow'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
