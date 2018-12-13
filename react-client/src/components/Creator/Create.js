@@ -1,10 +1,6 @@
 import React from 'react'
 import $ from 'jquery';
-import EventClassNew from '../Home/EventClassNew'
 import GoogleMapReact from 'google-map-react';
-import SimpleMap from './map';
-import Eventcreat from './Eventcreat'
-import MapForCreator from './mapForCreator'
 import Eventsets from './Eventsets'
 import Eventcreatshow from './Eventcreatshow'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
@@ -52,8 +48,18 @@ class Create extends React.Component {
   //silf envok function 
   componentDidMount() {
     $('#home').hide()
-    console.log('email============', this.props.email)
-    console.log('imgName============', this.state.imgName)
+    $.ajax({
+      type: "GET",
+      url: '/create',
+      success: (data) => {
+        this.setState({
+          items: data
+        })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
   }
   //this function will take the data from props and send them to the data base to creat event 
   handleSubmit(event) {
@@ -233,7 +239,7 @@ class Create extends React.Component {
 
             <div className="col-4 data-box">
               <div>
-                <h3><span>{this.state.items.length}</span> <a href="/Eventcreatshow"> Number of your events</a></h3>
+                <h3><span>{this.props.events.length}</span> <a href="/Eventcreatshow"> Number of your events</a></h3>
               </div>
             </div>
 

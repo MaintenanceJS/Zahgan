@@ -1,8 +1,6 @@
 import React from "react";
-import zahgan from "../Home/zahgan.jpg";
 import "./Vision.css";
 import $ from "jquery";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import {
   Button,
   Modal,
