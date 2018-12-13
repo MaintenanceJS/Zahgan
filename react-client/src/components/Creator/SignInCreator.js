@@ -84,7 +84,7 @@ class SignInCreator extends React.Component {
 
 
   render() {
-    if (this.state.sess && this.state.events.length > 0 && this.state.email.length > 0) {
+    if (this.state.sess && this.state.events.length > 0) {
       console.log(this.state.events)
       return (
         <Create email={this.state.email} events={this.state.events}></Create>
@@ -104,3 +104,6 @@ class SignInCreator extends React.Component {
   }
 }
 export default SignInCreator
+//this.state.events.length > 0 && 
+
+//this.state.sess && this.state.events.length > 0 && this.state.email.length > 0
