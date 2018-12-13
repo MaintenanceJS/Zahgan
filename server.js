@@ -10,6 +10,7 @@ const User = require('./database-mongo/User');
 const UserSession = require('./database-mongo/UserSession');
 var cookieParser = require('cookie-parser'); //requires npm install
 var session = require('express-session'); //requires npm install
+var helpDB = require("./database-mongo/helpDB");
 
 var app = express();
 app.use(bodyParser.json());
@@ -68,12 +69,18 @@ app.post('/create', function (req, res, next) {
   if (req.body.obj.url === "") {
     req.body.obj.url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDA4Jhlt2TGWKs8hSYa4yLTv26x7UqLoVtCbcbh1KNxPjbuo8Ibw";
   }
+<<<<<<< HEAD
+  if (req.body.obj.imgName === "") {
+    req.body.obj.imgName = imageName;
+  }
+=======
   //if (req.body.obj.imgName === "") {
   
   
   req.body.obj.imgName = imageName;
   console.log(imageName)
   //}
+>>>>>>> b77aa86d70a53088ee5122781297210d5118e224
   Event.create(req.body.obj).then(function (event) {
     res.send(event)
   }).catch(next)
@@ -584,7 +591,10 @@ app.set('view engine', 'ejs');
 
 
 var imageName;
+<<<<<<< HEAD
+=======
 
+>>>>>>> b77aa86d70a53088ee5122781297210d5118e224
 app.post('/upload', (req, res) => {
   console.log('in upload hello')
   upload(req, res, (err) => {
@@ -598,8 +608,12 @@ app.post('/upload', (req, res) => {
           msg: 'Error: No File Selected!'
         });
       } else {
+<<<<<<< HEAD
+        imageName = req.file.filename
+=======
         //imageName = req.file.filename
         imageName = 'http://' + 'localhost:3000' + '/images/' + req.file.filename;
+>>>>>>> b77aa86d70a53088ee5122781297210d5118e224
         console.log(imageName)
         // res.send({
         //   name: `${req.file.filename}`
@@ -612,3 +626,17 @@ app.post('/upload', (req, res) => {
 app.get('/upload', (req, res) => {
   res.send(imageName)
 })
+<<<<<<< HEAD
+
+// to save the query from the help component into the database
+app.post("/help", function (req, res, next) {
+  helpDB.create(req.body.queryDetails)
+    .then(function (data) {
+      res.send(data);
+    })
+    .catch(next);
+});
+
+
+=======
+>>>>>>> b77aa86d70a53088ee5122781297210d5118e224

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import Marker from 'google-map-marker'
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -42,7 +41,6 @@ class MapForCreator extends Component {
                         lat={ 31.010192}
                         lng={36.435863}
                         text='YAHYA'
-
                     />
                 </GoogleMapReact>
             </div>

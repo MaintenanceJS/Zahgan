@@ -1,8 +1,6 @@
 import React from 'react'
 import $ from 'jquery';
-import { Redirect } from 'react-router-dom'
 import '../UserSignIn/Signin.css';
-import Create from './Create'
 
 class CreatorEvents extends React.Component {
     constructor(props) {
