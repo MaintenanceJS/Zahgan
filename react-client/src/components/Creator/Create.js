@@ -52,7 +52,9 @@ class Create extends React.Component {
   componentDidMount() {
     $('#home').hide()
     $.ajax({
+      type: "GET",
       url: '/create',
+      data: {},
       success: (data) => {
         this.setState({
           items: data
@@ -209,7 +211,7 @@ class Create extends React.Component {
 
             <div className="col-4 data-box">
               <div>
-                <h3><span>{this.state.items.length}</span> <a href="/Eventcreatshow"> Number of your events</a></h3>
+                <h3><span>{this.props.events.length}</span> <a href="/Eventcreatshow"> Number of your events</a></h3>
               </div>
             </div>
 
