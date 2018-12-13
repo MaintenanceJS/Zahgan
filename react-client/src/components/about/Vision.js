@@ -68,7 +68,7 @@ class Vision extends React.Component {
 					</div>
 				</div>
 					<div>
-						<Modal className={'modal-open'} isOpen={this.state.modal} toggle={this.toggle} centered={true} size={'lg'}  style={{marginTop:'100px'}}>
+						<Modal className={'modal-open'} isOpen={this.state.modal} toggle={this.toggle} centered={true} size={'lg'}  style={{marginTop:'70px'}}>
 							<ModalBody>
 								<h2 style={{ textAlign: 'center', fontWeight: "bold", margin:'-5px', fontFamily: 'Times New Roman'}}>About Us</h2>  <hr/>
 								<p style={{fontSize:'20px', fontFamily: 'Times New Roman'}}> <strong>Zahgaan</strong> is an online event registration created to help manage events, festivals, conferences, workshops and activities.
