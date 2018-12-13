@@ -70,4 +70,4 @@ var Event = mongoose.model('Event', EventSchema);
 
 // module.exports.selectAll = selectAll;
 // module.exports.save=save;
-module.exports = Event;
+module.exports.Event = Event;
