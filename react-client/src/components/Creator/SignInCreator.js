@@ -28,7 +28,8 @@ class SignInCreator extends React.Component {
           this.getEvents(res.email)
           this.setState({
             isLoggedIn: true,
-            sess: res.sess
+            sess: res.sess,
+            email: res.email
           })
         }
       }
@@ -83,10 +84,10 @@ class SignInCreator extends React.Component {
 
 
   render() {
-    if (this.state.sess && this.state.events.length > 0) {
+    if (this.state.sess && this.state.events.length > 0 && this.state.email.length > 0) {
       console.log(this.state.events)
       return (
-        <Create events={this.state.events}></Create>
+        <Create email={this.state.email} events={this.state.events}></Create>
       )
     } else {
       return (
