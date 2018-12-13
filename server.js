@@ -58,9 +58,9 @@ app.post('/create', function (req, res, next) {
   if (req.body.obj.url === "") {
     req.body.obj.url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDA4Jhlt2TGWKs8hSYa4yLTv26x7UqLoVtCbcbh1KNxPjbuo8Ibw";
   }
-  if (req.body.obj.imgName === "") {
-    req.body.obj.imgName = imageName;
-  }
+  //if (req.body.obj.imgName === "") {
+  req.body.obj.imgName = imageName;
+  //}
   Event.create(req.body.obj).then(function (event) {
     res.send(event)
   }).catch(next)
@@ -580,6 +580,7 @@ app.set('view engine', 'ejs');
 
 
 var imageName;
+
 app.post('/upload', (req, res) => {
   console.log('in upload hello')
   upload(req, res, (err) => {
